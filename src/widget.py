@@ -17,3 +17,6 @@ def mask_account_card(info_card: str) -> str:
     else:
         masked_number = get_mask_card_number(str_chars)
     return f"{clean_name} {masked_number}"
+
+def get_date(str_date: str) -> str:
+    return f"{str_date[8:10]}, {str_date[5:7]}, {str_date[0:4]}"
