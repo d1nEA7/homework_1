@@ -1,5 +1,5 @@
-def filter_by_state(list_dict: list, state:str="EXECUTED") -> list:
-    """ Функция возвращает новый список словарей по значению EXECUTED"""
+def filter_by_state(list_dict: list, state: str = "EXECUTED") -> list:
+    """Функция возвращает новый список словарей по значению EXECUTED"""
     new_list_dict = []
     for item in list_dict:
         if item.get("state") == state:
