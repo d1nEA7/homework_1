@@ -1,8 +1,8 @@
-def get_mask_card_number():
+def get_mask_card_number(card_number: str) -> str:
     """Функцию маскировки номера банковской карты"""
-    assert get_mask_card_number("1234567812345678") == "1234 56** **** 5678"
+    return f"{card_number[:7]}** ****{card_number[-4:]}"
 
 
-def get_mask_account():
+def get_mask_account(account_number: str) -> str:
     """Функцию маскировки номера банковского счета"""
-    assert get_mask_account("73654108430135874305") == "**4305"
+    return f"** {account_number[-4:]}"
