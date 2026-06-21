@@ -1,3 +1,5 @@
+from typing import Any, Dict, List
+
 import pytest
 
 from src.processing import filter_by_state, sort_by_date
@@ -5,7 +7,7 @@ from src.processing import filter_by_state, sort_by_date
 
 # Фикстура с данными
 @pytest.fixture
-def transactions():
+def transactions() -> List[Dict[str, Any]]:
     return [
         {"id": 1, "state": "EXECUTED", "date": "2024-03-01T10:00:00"},
         {"id": 2, "state": "CANCELED", "date": "2024-02-15T12:30:00"},
@@ -17,7 +19,7 @@ def transactions():
 # ===== filter_by_state =====
 
 
-def test_filter_by_state_default(transactions):
+def test_filter_by_state_default(transactions: List[Dict[str, Any]]) -> None:
     """Фильтрация по умолчанию (state='EXECUTED')."""
     filtered = filter_by_state(transactions)
     assert len(filtered) == 2
@@ -34,7 +36,7 @@ def test_filter_by_state_default(transactions):
         ("NONEXISTENT", 0),
     ],
 )
-def test_filter_by_state_param(transactions, state, expected_count):
+def test_filter_by_state_param(transactions: List[Dict[str, Any]], state: str, expected_count: int) -> None:
     """Параметризация для различных возможных значений статуса state."""
     filtered = filter_by_state(transactions, state)
     assert len(filtered) == expected_count
@@ -43,7 +45,7 @@ def test_filter_by_state_param(transactions, state, expected_count):
 # ===== sort_by_date =====
 
 
-def test_sort_by_date_descending(transactions):
+def test_sort_by_date_descending(transactions: List[Dict[str, Any]]) -> None:
     """Сортировка по дате в порядке убывания."""
     sorted_list = sort_by_date(transactions)
     dates = [item["date"] for item in sorted_list]
@@ -55,7 +57,7 @@ def test_sort_by_date_descending(transactions):
     ]
 
 
-def test_sort_by_date_ascending(transactions):
+def test_sort_by_date_ascending(transactions: List[Dict[str, Any]]) -> None:
     """Сортировка по дате в порядке возрастания."""
     sorted_list = sort_by_date(transactions, reverse=False)
     dates = [item["date"] for item in sorted_list]
@@ -67,9 +69,9 @@ def test_sort_by_date_ascending(transactions):
     ]
 
 
-def test_sort_by_date_same_dates():
+def test_sort_by_date_same_dates() -> None:
     """Корректность сортировки при одинаковых датах."""
-    same = [
+    same: List[Dict[str, Any]] = [
         {"id": 1, "date": "2024-01-01"},
         {"id": 2, "date": "2024-01-01"},
     ]
@@ -86,7 +88,7 @@ def test_sort_by_date_same_dates():
         [{"id": 1, "date": "not a date"}],
     ],
 )
-def test_sort_by_date_invalid(bad_dates):
+def test_sort_by_date_invalid(bad_dates: List[Dict[str, Any]]) -> None:
     """Некорректные или нестандартные форматы дат."""
     with pytest.raises((ValueError, TypeError, AttributeError)):
         sort_by_date(bad_dates)

@@ -21,7 +21,7 @@ def sort_by_date(transactions: list, reverse: bool = True) -> list:
             raise TypeError("Значение 'date' должно быть строкой")
         # Проверка формата YYYY-MM-DD...
         date_str = item["date"]
-        if len(date_str) < 10 or date_str[4] != '-' or date_str[7] != '-':
+        if len(date_str) < 10 or date_str[4] != "-" or date_str[7] != "-":
             raise ValueError("Некорректный формат даты")
 
     return sorted(transactions, key=lambda x: x["date"], reverse=reverse)

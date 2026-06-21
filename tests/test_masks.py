@@ -1,3 +1,5 @@
+from typing import Any
+
 import pytest
 
 from src.masks import get_mask_account, get_mask_card_number
@@ -13,7 +15,7 @@ from src.masks import get_mask_account, get_mask_card_number
         ("9876543210987654", "9876 54** **** 7654"),
     ],
 )
-def test_get_mask_card_number_valid(card, expected):
+def test_get_mask_card_number_valid(card: str, expected: str) -> None:
     """Тестирование правильности маскирования номера карты."""
     assert get_mask_card_number(card) == expected
 
@@ -28,13 +30,13 @@ def test_get_mask_card_number_valid(card, expected):
         12345678,  # не строка
     ],
 )
-def test_get_mask_card_number_invalid(invalid_card):
+def test_get_mask_card_number_invalid(invalid_card: Any) -> None:
     """Граничные случаи и нестандартные длины номеров."""
     with pytest.raises((ValueError, TypeError)):
-        get_mask_card_number(invalid_card)
+        get_mask_card_number(invalid_card)  # type: ignore
 
 
-def test_get_mask_card_number_missing():
+def test_get_mask_card_number_missing() -> None:
     """Входная строка, где отсутствует номер карты."""
     with pytest.raises(ValueError):
         get_mask_card_number("")
@@ -51,7 +53,7 @@ def test_get_mask_card_number_missing():
         ("00000000000000000000", "**0000"),
     ],
 )
-def test_get_mask_account_valid(account, expected):
+def test_get_mask_account_valid(account: str, expected: str) -> None:
     """Тестирование правильности маскирования номера счета."""
     assert get_mask_account(account) == expected
 
@@ -66,13 +68,13 @@ def test_get_mask_account_valid(account, expected):
         7365410843,  # не строка
     ],
 )
-def test_get_mask_account_invalid(invalid_account):
+def test_get_mask_account_invalid(invalid_account: Any) -> None:
     """Различные форматы и длины номеров счетов."""
     with pytest.raises((ValueError, TypeError)):
-        get_mask_account(invalid_account)
+        get_mask_account(invalid_account)  # type: ignore
 
 
-def test_get_mask_account_too_short():
+def test_get_mask_account_too_short() -> None:
     """Номер счета меньше ожидаемой длины."""
     with pytest.raises(ValueError):
         get_mask_account("12345")

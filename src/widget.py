@@ -1,4 +1,4 @@
-from src.masks import get_mask_card_number, get_mask_account
+from src.masks import get_mask_account, get_mask_card_number
 
 
 def mask_account_card(card_or_account: str) -> str:
@@ -25,11 +25,11 @@ def get_date(date_str: str) -> str:
     if not isinstance(date_str, str):
         raise ValueError("Дата должна быть строкой")
 
-    if len(date_str) < 10 or date_str[4] != '-' or date_str[7] != '-':
+    if len(date_str) < 10 or date_str[4] != "-" or date_str[7] != "-":
         raise ValueError("Некорректный формат даты")
 
     # Если длина больше 10, следующий символ должен быть 'T' (иначе ошибка)
-    if len(date_str) > 10 and date_str[10] != 'T':
+    if len(date_str) > 10 and date_str[10] != "T":
         raise ValueError("Некорректный формат даты")
 
     # Если длина ровно 10, но тест ожидает ошибку — добавим проверку на отсутствие времени
