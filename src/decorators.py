@@ -3,6 +3,7 @@ from functools import wraps
 
 
 def log(filename=None):
+    """Функция декоратор логирования ошибок и времени работы функций"""
     def wrapper(func):
         @wraps(func)
         def inner(*args, **kwargs):
