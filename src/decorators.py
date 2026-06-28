@@ -1,8 +1,6 @@
-import time
 import logging
+import time
 from functools import wraps
-
-
 
 
 def decorator_log(filename=None):
@@ -13,15 +11,14 @@ def decorator_log(filename=None):
             try:
                 result = func(*args, **kwargs)
                 end = time.time()
-                success = True            #без ошибок
+                success = True  # без ошибок
 
                 return result
             except Exception as e:
-                success = False            #с ошибкой
+                success = False  # с ошибкой
                 error = e
                 end = time.time()
                 raise
-
 
             finally:
 
@@ -30,17 +27,16 @@ def decorator_log(filename=None):
                     log_message = f"Функция {func.__name__} выполнялась {work_time} сек. Ошибок нет"
                 else:
                     log_message = f"Функция {func.__name__} выполнялась {work_time} сек. Ошибка {error}"
-                if filename:              #если есть имя файла
+                if filename:  # если есть имя файла
                     with open(filename, "a") as f:
-                            f.write(log_message + "\n")
+                        f.write(log_message + "\n")
 
-
-                else:                      #если НЕТ имя файла
-                    if success:            #без ошибок
+                else:  # если НЕТ имя файла
+                    if success:  # без ошибок
                         print(log_message)
-                    else:                  #с ошибкой
+                    else:  # с ошибкой
                         print(log_message)
 
         return inner
-    return wrapper
 
+    return wrapper
