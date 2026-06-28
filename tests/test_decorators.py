@@ -1,12 +1,12 @@
 import pytest
 
-from src.decorators import decorator_log
+from src.decorators import log
 
 
-def test_decorator_log(capsys):
+def test_log(capsys):
     """Тест декоратора на удачное выполнение без ошибок"""
 
-    @decorator_log()
+    @log()
     def add(a, b):
         return a + b
 
@@ -19,7 +19,7 @@ def test_decorator_log(capsys):
 def test_log_error(capsys):
     """Тест декоратора на ошибку"""
 
-    @decorator_log()
+    @log()
     def divide(a, b):
         return a / b
 
@@ -35,7 +35,7 @@ def test_log_to_file(tmp_path):
     log_file = tmp_path / "test.log"
     filename = str(log_file)
 
-    @decorator_log(filename=filename)
+    @log(filename=filename)
     def multiply(a, b):
         return a * b
 

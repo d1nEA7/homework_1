@@ -1,13 +1,15 @@
-import logging
 import time
 from functools import wraps
 
 
-def decorator_log(filename=None):
+def log(filename=None):
     def wrapper(func):
         @wraps(func)
         def inner(*args, **kwargs):
             start = time.time()
+            end = time.time()
+            success = False
+
             try:
                 result = func(*args, **kwargs)
                 end = time.time()
@@ -21,7 +23,6 @@ def decorator_log(filename=None):
                 raise
 
             finally:
-
                 work_time = round(end - start, 2)
                 if success:
                     log_message = f"Функция {func.__name__} выполнялась {work_time} сек. Ошибок нет"
