@@ -4,7 +4,7 @@ import src.external_api
 
 
 def info_transactions(file_path: str) -> list[dict]:
-    """Получает данные о транзакциях из json"""  # 1задача
+    """Получает данные о транзакциях из json"""
     try:
         with open(file_path) as f:
             data = json.load(f)
@@ -15,16 +15,13 @@ def info_transactions(file_path: str) -> list[dict]:
         return []
 
 
-def sum_transactions(tr) -> float:
-    """сумма транзакций в рублях"""  # 2задача
-    amount = float(tr["operationAmount"]["amount"])
-    currency = tr["operationAmount"]["currency"]["code"]
-    if currency == "RUB":
-        return amount
-    else:
-        return src.external_api.convert_currency(amount, currency) 
+def sum_transactions(tr: dict) -> float:
+    """сумма транзакций в рублях"""
+    return src.external_api.convert_currency(tr)
 
 
-transactions = info_transactions("data/operation.json")
-for transaction in transactions:
-    rubles = sum_transactions(transaction)
+if __name__ == "__main__":
+    transactions = info_transactions("data/operation.json")
+    for transaction in transactions:
+        rubles = sum_transactions(transaction)
+        print(rubles)
