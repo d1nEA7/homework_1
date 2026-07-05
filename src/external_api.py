@@ -6,24 +6,25 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-def convert_currency(amount, currency):
+def convert_currency(amount: float, currency):
+    """Конвертация валют в рубли"""
     if currency == "RUB":
-        return amount
+        return round(amount, 2)
+    else:
+        api_key = os.getenv("APIKEY")
+        if not api_key:
+            raise ValueError("APIKEY не найден в .env")
 
-    api_key = os.getenv("APIKEY")
-    if not api_key:
-        raise ValueError("APIKEY не найден в .env")
+        url = "https://api.apilayer.com/exchangerates_data/convert"
+        params = {"from": currency, "to": "RUB", "amount": amount}
+        headers = {"apikey": api_key}
 
-    url = "https://api.apilayer.com/exchangerates_data/convert"
-    params = {"from": currency, "to": "RUB", "amount": amount}
-    headers = {"apikey": api_key}
+        response = requests.get(url, headers=headers, params=params)
 
-    response = requests.get(url, headers=headers, params=params)
+        if response.status_code != 200:
+            return 0.0
 
-    if response.status_code != 200:
+        data = response.json()
+        if data.get("success"):
+            return data["result"]
         return 0.0
-
-    data = response.json()
-    if data.get("success"):
-        return data["result"]
-    return 0.0

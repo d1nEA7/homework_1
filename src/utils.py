@@ -1,6 +1,6 @@
 import json
 
-from src.external_api import convert_currency
+import src.external_api
 
 
 def info_transactions(file_path: str) -> list[dict]:
@@ -11,7 +11,7 @@ def info_transactions(file_path: str) -> list[dict]:
             if isinstance(data, list):
                 return data
             return []
-    except FileNotFoundError:
+    except (FileNotFoundError, json.JSONDecodeError):
         return []
 
 
@@ -22,7 +22,7 @@ def sum_transactions(tr) -> float:
     if currency == "RUB":
         return amount
     else:
-        return convert_currency(amount, currency)
+        return src.external_api.convert_currency(amount, currency) 
 
 
 transactions = info_transactions("data/operation.json")
