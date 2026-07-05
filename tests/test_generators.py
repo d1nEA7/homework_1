@@ -40,7 +40,6 @@ def test_transaction_descriptions(transactions: List[Dict[str, Any]]) -> None:
     assert result == expected
 
 
-
 def test_card_number_generator() -> None:
     """тест генератора номера карт"""
     result: List[str] = list(card_number_generator(1, 5))

@@ -1,11 +1,12 @@
 import json
+
 from src.external_api import convert_currency
 
 
-def info_transactions() -> list[dict]:
-    """Получает данные о транзакциях из json"""
+def info_transactions(file_path: str) -> list[dict]:
+    """Получает данные о транзакциях из json"""  # 1задача
     try:
-        with open("data/operation.json") as f:
+        with open(file_path) as f:
             data = json.load(f)
             if isinstance(data, list):
                 return data
@@ -13,14 +14,17 @@ def info_transactions() -> list[dict]:
     except FileNotFoundError:
         return []
 
-transactions = info_transactions()
-for transaction in transactions:
-def sum_transactions(transaction) -> float:
-    """сумма транзакций в рублях"""
-    amount = transaction["amount"]
-    currency = transaction["operationAmount"]["currency"]["code"]
-    if transaction["code"] == "RUB":
+
+def sum_transactions(tr) -> float:
+    """сумма транзакций в рублях"""  # 2задача
+    amount = float(tr["operationAmount"]["amount"])
+    currency = tr["operationAmount"]["currency"]["code"]
+    if currency == "RUB":
         return amount
     else:
         return convert_currency(amount, currency)
 
+
+transactions = info_transactions("data/operation.json")
+for transaction in transactions:
+    rubles = sum_transactions(transaction)
