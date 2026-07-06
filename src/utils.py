@@ -2,21 +2,45 @@ import json
 
 import src.external_api
 
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    filename="logs/masks.log",
+    filemode="w",
+)
+
+info_transactions_logger = logging.getLogger("info_transactions_logger")
+sum_transactions_logger = logging.getLogger("sum_transactions_logger")
+
+
+
+
+
+
+
 
 def info_transactions(file_path: str) -> list[dict]:
     """Получает данные о транзакциях из json"""
+    info_transactions_logger.info("запуск info_transactions")
     try:
         with open(file_path) as f:
             data = json.load(f)
+            info_transactions_logger.info("Получает дынные из json")
             if isinstance(data, list):
+                info_transactions_logger.info("тип данных list")
                 return data
+            info_transactions_logger.info("вернула список")
             return []
     except (FileNotFoundError, json.JSONDecodeError):
+        info_transactions_logger.error("ошибка при чтении json")
         return []
 
 
 def sum_transactions(tr: dict) -> float:
     """сумма транзакций в рублях"""
+    sum_transactions_logger.info("запуск sum_transactions")
     return src.external_api.convert_currency(tr)
 
 
