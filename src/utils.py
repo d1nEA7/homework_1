@@ -1,11 +1,10 @@
 import json
+import logging
 
 import src.external_api
 
-import logging
-
 logging.basicConfig(
-    level=logging.INFO,
+    level=logging.DEBUG,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     filename="logs/masks.log",
     filemode="w",
@@ -13,12 +12,6 @@ logging.basicConfig(
 
 info_transactions_logger = logging.getLogger("info_transactions_logger")
 sum_transactions_logger = logging.getLogger("sum_transactions_logger")
-
-
-
-
-
-
 
 
 def info_transactions(file_path: str) -> list[dict]:
