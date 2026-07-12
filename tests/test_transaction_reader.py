@@ -43,5 +43,6 @@ def test_read_transactions_excel(mock_exists, mock_read_excel, sample_transactio
     mock_df = pd.DataFrame(sample_transactions)  # ← создаём DataFrame из фикстуры
     mock_read_excel.return_value = mock_df
     result = read_transactions_excel("fake.xlsx")
+    mock_exists.return_value = True
     assert result == sample_transactions
     mock_read_excel.assert_called_once_with("fake.xlsx")
