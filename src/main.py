@@ -4,7 +4,8 @@ from src.processing import filter_by_state, sort_by_date
 from src.bank_search import process_bank_search
 from src.widget import get_date, mask_account_card
 
-def main():
+
+def main() -> None:
     transactions = []
     selected = False
 
@@ -34,12 +35,6 @@ def main():
         else:
             print("Неверный выбор. Попробуйте снова.\n")
 
-
-
-
-
-
-
     status = ""
     while status not in ["EXECUTED", "CANCELED", "PENDING"]:
         status = input(
@@ -59,7 +54,6 @@ def main():
     elif status == "PENDING":
         transactions = filter_by_state(transactions, "PENDING")
 
-
     sorted_by_date = input("Отсортировать операции по дате? Да/Нет").lower()
     if sorted_by_date == "да":
         sort_reverse = input("Отсортировать по возрастанию или по убыванию?").lower()
@@ -76,16 +70,10 @@ def main():
                 rub_transactions.append(transaction)
         transactions = rub_transactions
 
-
-
-
-
-
     filter_by_word = input("Отфильтровать список транзакций по определенному слову в описании? Да/Нет").lower()
     if filter_by_word == "да":
         search_word = input("Введите слово для поиска: ")
         transactions = process_bank_search(transactions, search_word)
-
 
     print("Распечатываю итоговый список транзакций...")
     if transactions:
@@ -95,7 +83,8 @@ def main():
     else:
         print("Не найдено ни одной транзакции, подходящей под ваши условия фильтрации")
 
-def display_transaction(transaction):
+
+def display_transaction(transaction: dict) -> None:
     """Форматирует транзакцию"""
     format_date = get_date(transaction["date"])
     description = transaction.get("description", "Описание отсутствует")
@@ -118,7 +107,6 @@ def display_transaction(transaction):
         print(transfer_str)
     print(f"Сумма: {amount} {currency}")
     print()
-
 
 
 if __name__ == "__main__":
