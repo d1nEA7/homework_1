@@ -1,7 +1,7 @@
+from src.bank_search import process_bank_search
+from src.processing import filter_by_state, sort_by_date
 from src.transaction_reader import read_transactions_csv, read_transactions_excel
 from src.utils import info_transactions
-from src.processing import filter_by_state, sort_by_date
-from src.bank_search import process_bank_search
 from src.widget import get_date, mask_account_card
 
 
