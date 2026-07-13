@@ -32,7 +32,7 @@ def info_transactions(file_path: str) -> list[dict]:
 
 
 def sum_transactions(tr: dict) -> float:
-    """сумма транзакций в рублях"""
+    """конвертирует в руб., считает сумму транзакций в рублях"""
     sum_transactions_logger.info("запуск sum_transactions")
     return src.external_api.convert_currency(tr)
 
