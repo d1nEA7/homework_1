@@ -18,7 +18,7 @@ def info_transactions(file_path: str) -> list[dict]:
     """Получает данные о транзакциях из json"""
     info_transactions_logger.info("запуск info_transactions")
     try:
-        with open(file_path) as f:
+        with open(file_path, encoding="utf-8") as f:
             data = json.load(f)
             info_transactions_logger.info("Получает дынные из json")
             if isinstance(data, list):
@@ -38,7 +38,7 @@ def sum_transactions(tr: dict) -> float:
 
 
 if __name__ == "__main__":
-    transactions = info_transactions("data/operation.json")
+    transactions = info_transactions("data/operations.json")
     for transaction in transactions:
         rubles = sum_transactions(transaction)
         print(rubles)

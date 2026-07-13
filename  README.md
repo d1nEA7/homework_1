@@ -20,6 +20,10 @@ git clone git@github.com:d1nEA7/homework_1.git
 ```
 poetry install
 ```
+3. Запуск программы (на OS WINDOWS):
+```
+python -m src.main
+```
 В проект добавлены:
 
 - `convert_currency()` — конвертация валют через внешнее API (модуль `external_api.py`)п

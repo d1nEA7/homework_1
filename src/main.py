@@ -1,5 +1,3 @@
-
-
 from src.transaction_reader import read_transactions_csv, read_transactions_excel
 from src.utils import info_transactions
 from src.processing import filter_by_state, sort_by_date
@@ -92,6 +90,8 @@ def main():
     print("Распечатываю итоговый список транзакций...")
     if transactions:
         print(f"Всего банковских операций в выборке: {len(transactions)}")
+        for transaction in transactions:
+            display_transaction(transaction)
     else:
         print("Не найдено ни одной транзакции, подходящей под ваши условия фильтрации")
 
