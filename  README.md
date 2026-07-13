@@ -24,12 +24,47 @@ poetry install
 ```
 python -m src.main
 ```
-В проект добавлены:
+## ⚙️ Список функций
 
-- `convert_currency()` — конвертация валют через внешнее API (модуль `external_api.py`)п
-- `info_transactions()` — чтение JSON-файла с транзакциями (модуль `utils.py`)
-- `sum_transactions()` — возвращает сумму транзакции в рублях (модуль `utils.py`) и многие другие.
-```
+### Модуль `utils.py`
+- `info_transactions(file_path: str) -> list[dict]` — читает JSON-файл и возвращает список транзакций
+- `sum_transactions(tr: dict) -> float` — конвертирует сумму транзакции в рубли (использует `convert_currency`)
+
+### Модуль `transaction_reader.py`
+- `read_transactions_csv(path: str) -> list[dict]` — читает CSV-файл с транзакциями (разделитель `;`)
+- `read_transactions_excel(path: str) -> list[dict]` — читает Excel-файл (`.xlsx`)
+
+### Модуль `processing.py`
+- `filter_by_state(transactions: list, state: str) -> list[dict]` — фильтрует транзакции по статусу (`EXECUTED`, `CANCELED`, `PENDING`)
+- `sort_by_date(transactions: list, reverse: bool) -> list[dict]` — сортирует транзакции по дате
+
+### Модуль `external_api.py`
+- `convert_currency(transaction: dict) -> float` — конвертирует сумму транзакции в рубли через внешнее API (поддерживает USD, EUR)
+
+### Модуль `bank_search.py`
+- `process_bank_search(data: list[dict], search: str) -> list[dict]` — ищет транзакции по описанию (регулярные выражения, без учёта регистра)
+
+### Модуль `widget.py`
+- `mask_account_card(card_or_account: str) -> str` — маскирует номер карты или счёта
+- `get_date(date_str: str) -> str` — преобразует дату из формата ISO в `DD.MM.YYYY`
+
+### Модуль `masks.py`
+- `get_mask_card_number(card_number: str) -> str` — маскирует номер карты (формат: `XXXX XX** **** XXXX`)
+- `get_mask_account(account_number: str) -> str` — маскирует номер счёта (формат: `**XXXX`)
+
+### Модуль `decorators.py`
+- `@log` — логирует вызов функции (в файл или консоль)
+- `@retry` — повторяет вызов при ошибке
+- `@shorten_words` — обрезает слова в возвращаемом тексте
+
+### Модуль `main.py`
+- `main() -> None` — основная логика программы (меню, фильтры, вывод)
+- `display_transaction(transaction: dict) -> None` — форматирует и выводит одну транзакцию
+
+### Модуль `generators.py`
+- `filter_by_currency(transactions: list, currency: str) -> Iterator[dict]` — фильтрует транзакции по валюте (генератор)
+- `transaction_descriptions(transactions: list) -> Iterator[str]` — возвращает описания транзакций (генератор)
+- `card_number_generator(start: int, end: int) -> Iterator[str]` — генерирует номера карт в заданном диапазоне
 ## 🔐 Переменные окружения
 
 Для конвертации валют используется **Exchange Rates Data API** от сервиса [apilayer.com](https://apilayer.com).
